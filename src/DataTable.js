@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './DataTable.css';
 import TableActions from './components/table-actions/TableActions';
 import TableHead from './components/table-head/TableHead';
@@ -80,15 +79,15 @@ export default class DataTable extends Component {
 
   render() {
     //add text-nowrap class to table for single line data
-    const { columns, data, pages, className, manual, onCellClick, onRowClick, title, actions, onSearch, onSortChange } = this.props;
+    const { columns, data, pages, className, manual, onCellClick, onRowClick, title, actions, onSearch, onSortChange, totalRows } = this.props;
     const { localData, page, pageSize, pages: localPages, totalRows: localTotalRows } = this.state;
     return <>
       <TableActions
         title={title}
-        actions={actions}
+        actions={actions || []}
         onSearch={onSearch}
       />
-      <table className={`table table-responsive ${className}`}>
+      <table className={className}>
         <TableHead
           columns={columns}
           onSortChange={onSortChange}

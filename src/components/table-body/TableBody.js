@@ -44,8 +44,8 @@ export default class TableBody extends Component {
 
   getBody() {
     const { data } = this.props;
-    return data && data.map(row => {
-      return <tr onClick={this.handleRowClick} key={row.id}>{this.getRow(row)}</tr>;
+    return data && data.map((row, index) => {
+      return <tr onClick={this.handleRowClick} key={index}>{this.getRow(row)}</tr>;
     });
   }
 
