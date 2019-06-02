@@ -34,13 +34,16 @@ export default class TableFooter extends Component {
 
   getMetaInfo() {
     const { page, totalRows, pageSize } = this.props;
+    const startPage = page * pageSize + 1;
+    let endPage = page * pageSize + pageSize;
+    endPage = endPage > totalRows ? totalRows : endPage
     return <div className="d-none d-lg-inline-block meta-info">
-      Showing {page * pageSize + 1} - {page * pageSize + pageSize} of {totalRows}
+      Showing {startPage} - {endPage} of {totalRows}
     </div>
   }
 
   getPageSwitcher() {
-    const { totalRows, page, pages } = this.props;
+    const { totalRows, pages } = this.props;
     return <div className="page-switcher">
       Page <input ref={this.pageSwitcherRef} onBlur={this.handlePageChange} type="number" min="0" max={totalRows} />
       of {pages}

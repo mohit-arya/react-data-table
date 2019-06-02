@@ -17,18 +17,20 @@ export default class DataTable extends Component {
 
   constructor(props) {
     super(props);
-    const { data, page, defaultPageSize } = props;
+    const { data, page, pageSize } = props;
     this.state = {
       page: page,
-      pageSize: defaultPageSize,
+      pageSize: pageSize,
       localData: data
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { data, manual } = this.props;
-    if (!manual && data !== prevProps.data) {
+    const { data, page, pageSize } = this.props;
+    if (data !== prevProps.data) {
       this.setState({
+        page: page,
+        pageSize: pageSize,
         localData: data
       }, () => {
         this.updateLocalData();
@@ -79,8 +81,8 @@ export default class DataTable extends Component {
 
   render() {
     //add text-nowrap class to table for single line data
-    const { columns, data, pages, className, manual, onCellClick, onRowClick, title, actions, onSearch, onSortChange, totalRows } = this.props;
-    const { localData, page, pageSize, pages: localPages, totalRows: localTotalRows } = this.state;
+    const { columns, data, pages, className, manual, onCellClick, onRowClick, title, actions, onSearch, onSortChange, totalRows, page, pageSize } = this.props;
+    const { localData, page: localPage, pageSize: localPageSize, pages: localPages, totalRows: localTotalRows } = this.state;
     return <>
       <TableActions
         title={title}
@@ -101,8 +103,8 @@ export default class DataTable extends Component {
       </table>
       <TableFooter
         pages={manual ? pages : localPages}
-        page={page}
-        pageSize={pageSize}
+        page={manual ? page : localPage}
+        pageSize={manual ? pageSize : localPageSize}
         handlePageChange={this.handlePageChange}
         totalRows={manual ? totalRows : localTotalRows}
         handlePageSizeChange={this.handlePageSizeChange}
